@@ -8,12 +8,12 @@ import { EntryStackScreen } from "./screens/EntryStackScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 
 
-/*const firebaseConfig = require("./keys.json");
+const firebaseConfig = require("./keys.json");
 
 if (getApps().length == 0) {
   initializeApp(firebaseConfig);
 }
-
+/*
 const theme = {
   ...DefaultTheme,
   roundness: 2,

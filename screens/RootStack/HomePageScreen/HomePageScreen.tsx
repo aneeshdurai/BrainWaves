@@ -1,6 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import BuddySearchScreen from "../BuddySearchScreen/BuddySearchScreen";
+import BuddySearchScreen from "../BuddySearchScreen/BuddySearchScreen.main";
 import { TextInput, Button } from "react-native-paper";
 import { View } from "react-native";
 

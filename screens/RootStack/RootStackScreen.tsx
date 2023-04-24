@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import BuddySearchScreen from "./BuddySearchScreen/BuddySearchScreen";
+import BuddySearchScreen from "./BuddySearchScreen/BuddySearchScreen.main";
 import {HomePageScreen } from "./HomePageScreen/HomePageScreen";
 
 
