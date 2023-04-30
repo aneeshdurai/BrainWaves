@@ -26,22 +26,7 @@ export default function BuddySearchScreen({navigation}: Props) {
     //const [name, setName] = useState<string>('')
     const [name, setName] = useState<string>('');
 
-    const courseList = [
-        {
-            label: "CS 61A",
-            value: "CS 61A",
-        },
-        {
-            label: "CS 61B",
-            value: "CS 61B",
-        },
-        {
-            label: "CS 61C",
-            value: "CS 61C",
-        },
 
-    ]
-    
     const asyncAwaitNetworkRequests = async () => {
         const db = getFirestore();
         const requestCollection = collection(db, "tickets");

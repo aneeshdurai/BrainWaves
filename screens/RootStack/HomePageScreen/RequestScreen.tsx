@@ -165,7 +165,13 @@ export default function ListofBuddies({navigation}: Props) {
         }*/
         
       };
-
+    
+      const deleteTicket = async (ticket: Ticket) => {
+      
+        if (ticket.id) {
+          await deleteDoc(doc(db, "tickets", ticket.id));
+        }
+      };
 
       const Bar = () => {
         return (
@@ -173,7 +179,10 @@ export default function ListofBuddies({navigation}: Props) {
             <Appbar.Action
               icon="exit-to-app"
               onPress={() => {
-                signOut(auth);
+                deleteTicket(myticket);
+                if (auth.currentUser?.uid != null) {
+                  signOut(auth);
+                }
               }}
             />
             <Appbar.Content title="Requests" />

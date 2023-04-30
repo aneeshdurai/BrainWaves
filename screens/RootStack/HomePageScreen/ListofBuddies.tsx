@@ -8,6 +8,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { Ticket } from "../../../models/ticket";
 import { styles } from "./ListofBuddies.styles";
 import { HomeStackParamList } from "./HomeStackScreen";
+import HomePageScreen from "./HomePageScreen";
 
 
 interface Props {
@@ -136,10 +137,14 @@ export default function ListofBuddies({navigation}: Props) {
               icon="exit-to-app"
               onPress={() => {
                 deleteTicket(myticket);
-                signOut(auth);
+                /*if (auth.currentUser?.uid != null) {
+                  signOut(auth);
+                }*/
+                navigation.navigate('HomePageScreen')
+                
               }}
             />
-            <Appbar.Content title="List of Buddies" />
+            <Appbar.Content title={"List of Buddies for " + myticket.course} />
             <Appbar.Action
               icon="close"
               onPress={() => {

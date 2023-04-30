@@ -10,6 +10,7 @@ import { View, Image} from "react-native";
 import { HomeStackParamList } from "./HomeStackScreen";
 import { getAuth, signOut } from "firebase/auth";
 import { styles } from "./ListofBuddies.styles";
+import App from "../../../App";
 
 // This is a TypeScript Type that defines the parameters of this stack.
 // Read More: https://reactnavigation.org/docs/typescript/
@@ -26,6 +27,18 @@ export default function HomePageScreen({navigation} : Props) {
     return (
       <Appbar.Header>
         <Appbar.Content title="BrainWaves" />
+        <Appbar.Action
+              icon="close"
+              onPress={() => {
+                //deleteTicket(myticket);
+                /*if (auth.currentUser?.uid != null) {
+                  signOut(auth);
+                }*/
+                signOut(auth)
+                
+              }}
+            />
+            
       </Appbar.Header>
     );
   };

@@ -62,6 +62,27 @@ export default function ListofBuddies({navigation}: Props) {
         
       };
 
+      const findATicket = (uid: string) => {
+        var id: any = ""
+        tickets.forEach((ticket: Ticket) => {
+         // const newTicket = ticket.data() as Ticket;
+          if (ticket.uid === uid) {
+            //console.log("FOUND!!", ticket.id, "+", uid, "+", ticket.uid)
+            id = ticket;
+          }
+          }
+        )
+        return id
+        
+      }
+      const myticket = findATicket(currentUserId);
+
+      const deleteTicket = async (ticket: Ticket) => {
+      
+        if (ticket.id) {
+          await deleteDoc(doc(db, "tickets", ticket.id));
+        }
+      };
 
       const Bar = () => {
         return (
@@ -69,7 +90,10 @@ export default function ListofBuddies({navigation}: Props) {
             <Appbar.Action
               icon="exit-to-app"
               onPress={() => {
-                signOut(auth);
+                deleteTicket(myticket);
+                if (auth.currentUser?.uid != null) {
+                  signOut(auth);
+                }
               }}
             />
             <Appbar.Content title="Your Match" />
