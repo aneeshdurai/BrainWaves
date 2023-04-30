@@ -8,6 +8,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../RootStackScreen";
 import { Ticket } from "../../../models/ticket";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { getAuth, signOut } from "firebase/auth";
 
 interface Props {
     navigation: StackNavigationProp<RootStackParamList, "BuddySearchScreen">;
@@ -15,10 +16,16 @@ interface Props {
 
 export default function BuddySearchScreen({navigation}: Props) {
     
-    //const [name, setName] = useState<string>('')
+    
+
     const [course, setCourse] = useState<string>('')
     const [loc, setLoc] = useState<string>('')
     const [desc, setDesc] = useState<string>('')
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    //const [name, setName] = useState<string>('')
+    const [name, setName] = useState<string>('');
+
     const courseList = [
         {
             label: "CS 61A",
@@ -37,14 +44,25 @@ export default function BuddySearchScreen({navigation}: Props) {
     
     const asyncAwaitNetworkRequests = async () => {
         const db = getFirestore();
-        const requestCollection = collection(db, "requests");
+        const requestCollection = collection(db, "tickets");
         const requestRef = doc(requestCollection);
         const storage = getStorage(getApp());
         console.log("Collected Data")
+        
+        console.log(currentUser.displayName)
+        const name = currentUser.displayName
+        /*if (currentUser) {
+            console.log("currentUser exists")
+            console.log(currentUser?.displayName)
+            setName(currentUser?.displayName)
+            console.log(name)
+        }*/
+        
         const request: Ticket = {
           course: course,
           location: loc,
           description: desc,
+          name: name
         };
         //const docRef = await addDoc(collection(db, "requests"), request);
         await setDoc(requestRef, request);
@@ -58,11 +76,21 @@ export default function BuddySearchScreen({navigation}: Props) {
         catch (e) {
             console.log("Error while writing request:", e);
         }
-        navigation.navigate('Home')
+        navigation.navigate('HomeStackScreen')
     }
+
+    const Bar = () => {
+        return (
+          <Appbar.Header>
+            <Appbar.Action onPress={() => {signOut(auth)}} icon="close" />
+            <Appbar.Content title="Search For A Buddy" />
+          </Appbar.Header>
+        );
+      };
 
     return (
         <>
+            <Bar/>
             <View>
                 {<TextInput 
                     label = "Course"

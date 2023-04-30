@@ -3,4 +3,9 @@ export interface Ticket {
     course: string;
     location: string;
     description: string;
+    name: any;
+    //userID: string;
+    //matched: boolean;
+    //matchedID?: string;
+
   }

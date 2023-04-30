@@ -2,11 +2,12 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import BuddySearchScreen from "./BuddySearchScreen/BuddySearchScreen.main";
-import {HomePageScreen } from "./HomePageScreen/HomePageScreen";
+import {HomeStackScreen} from "./HomePageScreen/HomeStackScreen";
+import ListofBuddies from "./HomePageScreen/ListofBuddies";
 
 
 export type RootStackParamList = {
-  Home: undefined;
+  HomeStackScreen: undefined;
   BuddySearchScreen: undefined;
 };
 
@@ -26,8 +27,8 @@ export function RootStackScreen() {
           component={BuddySearchScreen}
         />
         <RootStack.Screen
-          name="Home"
-          component={HomePageScreen}
+          name="HomeStackScreen"
+          component={HomeStackScreen}
           options={options}
         />
         
