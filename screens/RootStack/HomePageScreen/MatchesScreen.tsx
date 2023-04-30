@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, FlatList, Image, Alert} from "react-native";
+import { View, FlatList } from "react-native";
 import { Appbar, Button, Card } from "react-native-paper";
 import firebase from "firebase/app"
 import { getFirestore, collection, query, onSnapshot, orderBy, setDoc, doc, deleteDoc } from "firebase/firestore";
@@ -11,7 +11,7 @@ import { HomeStackParamList } from "./HomeStackScreen";
 
 
 interface Props {
-    navigation: StackNavigationProp<HomeStackParamList, "ListofBuddies">;
+    navigation: StackNavigationProp<HomeStackParamList, "MatchesScreen">;
   }
 
 
@@ -23,8 +23,7 @@ export default function ListofBuddies({navigation}: Props) {
 
     const auth = getAuth();
     const currentUserId = auth.currentUser!.uid;
-    
-    console.log(auth.currentUser)
+    //console.log(auth.currentUser)
     const db = getFirestore();
     const ticketCollection = collection(db, "tickets");
 
@@ -42,79 +41,13 @@ export default function ListofBuddies({navigation}: Props) {
         return unsubscribe;
     }, []);
 
-    const findOurTicket = (uid: string) => {
-      tickets.forEach((ticket: any) => {
-        const newTicket = ticket.data() as Ticket;
-        if (newTicket.uid === currentUserId) {
-          return newTicket.id
-        }
-        }
-      )
-      
-    }
-
-    const findATicket = (uid: string) => {
-      var id: any = ""
-      tickets.forEach((ticket: Ticket) => {
-       // const newTicket = ticket.data() as Ticket;
-        if (ticket.uid === uid) {
-          //console.log("FOUND!!", ticket.id, "+", uid, "+", ticket.uid)
-          id = ticket;
-        }
-        }
-      )
-      return id
-      
-    }
-
-    
-    const myticket = findATicket(currentUserId);
-      
-
-    const deleteTicket = async (ticket: Ticket) => {
-      
-      if (ticket.id) {
-        await deleteDoc(doc(db, "tickets", ticket.id));
-      }
-    };
-
-    const request = async (ticket: Ticket) => {
-      //console.log(myticket)
-      ticket.requests.push(myticket.uid)
-      if (ticket.id) {
-        await setDoc(doc(db, "tickets", ticket.id), ticket);
-      }
-      console.log(ticket)
-      //myticket.requests.push(ticket.uid)
-      //console.log(findATicket(ticket.uid))
-    
-    }
 
     const renderTicket = ({ item }: { item: Ticket }) => {
         
-        if (currentUserId != item.uid) {
-          if (myticket.course == item.course) {
-            return (
 
-              <Card style={{ margin: 16 }}>
-                <Card.Title
-                  title={item.name +
-                    " at " + item.location}
-                  subtitle={
-                    item.description
-                  }
-                />
-                <Card.Actions>
-                  <Button onPress={() => {request(item)}}>
-                    REQUEST
-                  </Button>
-                </Card.Actions>
-              </Card>
-            );
-          }
-        }
-        else {
+        if (item.matchedID == currentUserId){
           return (
+
             <Card style={{ margin: 16 }}>
               <Card.Title
                 title={item.name +
@@ -124,8 +57,9 @@ export default function ListofBuddies({navigation}: Props) {
                 }
               />
             </Card>
-          )
+          );
         }
+        
       };
 
 
@@ -135,11 +69,10 @@ export default function ListofBuddies({navigation}: Props) {
             <Appbar.Action
               icon="exit-to-app"
               onPress={() => {
-                deleteTicket(myticket);
                 signOut(auth);
               }}
             />
-            <Appbar.Content title="List of Buddies" />
+            <Appbar.Content title="Your Match" />
             <Appbar.Action
               icon="close"
               onPress={() => {
@@ -153,7 +86,7 @@ export default function ListofBuddies({navigation}: Props) {
 
     const ListEmptyComponent = () => {
         return (
-            <Button onPress = {() => navigation.navigate('HomePageScreen')}>No Tickets At This Time</Button>
+            <Button onPress = {() => navigation.navigate('HomePageScreen')}>You Haven't Matched With Anyone</Button>
         )
       }
 
@@ -172,12 +105,6 @@ export default function ListofBuddies({navigation}: Props) {
                     ListEmptyComponent={ListEmptyComponent}
                  />
              </View>
-             <Image
-                style={styles.tinyLogo}
-                source={{
-                uri: 'assets/logo.png',
-                }}
-              />
         </>
         
     )

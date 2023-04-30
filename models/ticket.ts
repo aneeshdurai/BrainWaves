@@ -4,8 +4,10 @@ export interface Ticket {
     location: string;
     description: string;
     name: any;
-    //userID: string;
-    //matched: boolean;
-    //matchedID?: string;
+    uid: string;
+    requested: boolean;
+    requests: string[];
+    matched: boolean;
+    matchedID?: string;
 
   }

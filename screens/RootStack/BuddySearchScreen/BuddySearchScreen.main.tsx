@@ -47,10 +47,12 @@ export default function BuddySearchScreen({navigation}: Props) {
         const requestCollection = collection(db, "tickets");
         const requestRef = doc(requestCollection);
         const storage = getStorage(getApp());
-        console.log("Collected Data")
+        //console.log("Collected Data")
         
-        console.log(currentUser.displayName)
+        //console.log(currentUser.displayName)
         const name = currentUser.displayName
+        const uid = currentUser.uid
+        //console.log("My ID", uid)
         /*if (currentUser) {
             console.log("currentUser exists")
             console.log(currentUser?.displayName)
@@ -62,7 +64,12 @@ export default function BuddySearchScreen({navigation}: Props) {
           course: course,
           location: loc,
           description: desc,
-          name: name
+          name: name,
+          uid: uid,
+          matched: false,
+          requested: false,
+          requests: []
+
         };
         //const docRef = await addDoc(collection(db, "requests"), request);
         await setDoc(requestRef, request);
@@ -82,7 +89,7 @@ export default function BuddySearchScreen({navigation}: Props) {
     const Bar = () => {
         return (
           <Appbar.Header>
-            <Appbar.Action onPress={() => {signOut(auth)}} icon="close" />
+            <Appbar.Action onPress={() => {signOut(auth)}} icon={"close"} />
             <Appbar.Content title="Search For A Buddy" />
           </Appbar.Header>
         );
@@ -110,7 +117,7 @@ export default function BuddySearchScreen({navigation}: Props) {
                     onChangeText = {desc => setDesc(desc)}
                     autoComplete = "off"
                 />}
-                {<Button onPress = {match}>Match</Button>}
+                {<Button onPress = {match}>SEARCH</Button>}
             </View>
         
         

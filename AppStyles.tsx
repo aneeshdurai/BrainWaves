@@ -23,4 +23,12 @@ export const AppStyles = StyleSheet.create({
   body: {
     fontSize: 14,
   },
+  tinyLogo: {
+    width: 50,
+    height: 50,
+  },
+  logo: {
+    width: 66,
+    height: 58,
+  },
 });
